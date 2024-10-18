@@ -37,6 +37,4 @@ Bu PowerShell scripti, Windows işletim sisteminde otomatik olarak yeni bir kull
 - Yönetici yetkileriyle çalıştırılmalı
 - PowerShell versiyon 5.0 ve üstü
 
-## Uyarılar
-Bu script, sistemde kritik değişiklikler yapmaktadır (yeni kullanıcı ekleme, admin yetkisi verme, güvenlik duvarı ve Windows Defender'ı kapatma). **Yalnızca izin verilen sistemlerde ve etik kullanım çerçevesinde kullanılmalıdır.**
 
